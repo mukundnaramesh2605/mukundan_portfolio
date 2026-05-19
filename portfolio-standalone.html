@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<!-- CONTENT: update page title -->
+<title>Mukundan Ramesh — Quality Engineer & AI/ML Learner</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<style>
+/* ── RESET & BASE ─────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; font-size: 16px; }
+
+/* ── DESIGN TOKENS — edit here to retheme ─────────────────────────────── */
+:root {
+  --bg:           #0D0F14;
+  --surface:      #13161E;
+  --surface-hover:#1A1F2B;
+  --border:       #1F2535;
+  --accent:       #C9A96E;
+  --accent-muted: #8A6F45;
+  --cream:        #F0EBE1;
+  --muted:        #6B7494;
+  --highlight:    #3D4F7A;
+  --radius:       10px;
+}
+
+body {
+  background: var(--bg);
+  color: var(--cream);
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 400;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── UTILITIES ────────────────────────────────────────────────────────── */
+.container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+.section    { padding: 96px 0; background: var(--bg); }
+.section-alt{ padding: 96px 0; background: var(--surface); }
+
+.tag {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  background: rgba(201,169,110,0.12);
+  color: var(--accent);
+  border: 1px solid rgba(201,169,110,0.25);
+  margin-bottom: 16px;
+}
+
+.section-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(32px, 4vw, 52px);
+  font-weight: 600;
+  line-height: 1.15;
+  margin-bottom: 56px;
+}
+
+/* ── FADE-IN ANIMATION ────────────────────────────────────────────────── */
+.fade { opacity: 0; transform: translateY(28px); transition: opacity 0.7s ease, transform 0.7s ease; }
+.fade.visible { opacity: 1; transform: translateY(0); }
+
+/* ── NAV ──────────────────────────────────────────────────────────────── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  padding: 0 24px;
+  transition: background 0.3s, backdrop-filter 0.3s, border-color 0.3s;
+  border-bottom: 1px solid transparent;
+}
+nav.scrolled {
+  background: rgba(13,15,20,0.95);
+  backdrop-filter: blur(12px);
+  border-bottom-color: var(--border);
+}
+.nav-inner {
+  max-width: 1100px; margin: 0 auto;
+  display: flex; align-items: center; justify-content: space-between; height: 64px;
+}
+.nav-logo {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px; color: var(--cream); text-decoration: none;
+}
+.nav-logo span { color: var(--accent); }
+.nav-links { display: flex; gap: 32px; align-items: center; }
+.nav-links a {
+  color: var(--muted); font-size: 13px; font-weight: 500;
+  letter-spacing: 0.06em; text-transform: uppercase;
+  text-decoration: none; transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--cream); }
+.nav-cta {
+  background: var(--accent); color: #0D0F14 !important;
+  padding: 8px 18px; border-radius: 4px; font-weight: 700 !important;
+}
+.nav-cta:hover { opacity: 0.85; }
+.menu-btn { display: none; background: none; border: none; cursor: pointer; color: var(--cream); font-size: 24px; }
+.mobile-menu {
+  display: none; flex-direction: column; gap: 16px;
+  padding: 16px 24px;
+  background: var(--surface); border-top: 1px solid var(--border);
+}
+.mobile-menu.open { display: flex; }
+.mobile-menu a { color: var(--muted); text-decoration: none; font-size: 15px; padding: 4px 0; }
+
+/* ── HERO ─────────────────────────────────────────────────────────────── */
+#hero {
+  min-height: 100vh; display: flex; align-items: center;
+  padding-top: 80px; position: relative; overflow: hidden;
+}
+.hero-grid {
+  position: absolute; inset: 0; pointer-events: none;
+  background-image:
+    linear-gradient(rgba(201,169,110,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(201,169,110,0.03) 1px, transparent 1px);
+  background-size: 80px 80px;
+}
+.hero-glow {
+  position: absolute; top: 30%; right: 10%; width: 500px; height: 500px;
+  border-radius: 50%;
+  background: radial-gradient(ellipse, rgba(61,79,122,0.25) 0%, transparent 70%);
+  pointer-events: none;
+}
+.hero-content { position: relative; z-index: 1; width: 100%; }
+.hero-h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(42px, 7vw, 88px);
+  font-weight: 600; line-height: 1.1; margin-bottom: 28px;
+  max-width: 820px;
+}
+.hero-h1 em { color: var(--accent); font-style: italic; }
+.hero-sub {
+  font-size: clamp(16px, 2vw, 19px);
+  color: var(--muted); max-width: 600px;
+  line-height: 1.75; margin-bottom: 48px; font-weight: 300;
+}
+.btn-ctas { display: flex; gap: 16px; flex-wrap: wrap; }
+.btn-primary {
+  padding: 14px 32px; font-size: 14px; font-weight: 600;
+  letter-spacing: 0.06em; text-transform: uppercase;
+  background: var(--cream); color: #0D0F14;
+  border: none; border-radius: 4px; cursor: pointer;
+  text-decoration: none; display: inline-block;
+  transition: opacity 0.2s;
+}
+.btn-primary:hover { opacity: 0.85; }
+.btn-outline {
+  padding: 14px 32px; font-size: 14px; font-weight: 600;
+  letter-spacing: 0.06em; text-transform: uppercase;
+  background: transparent; color: var(--cream);
+  border: 1px solid var(--border); border-radius: 4px;
+  cursor: pointer; text-decoration: none; display: inline-block;
+  transition: border-color 0.2s, color 0.2s;
+}
+.btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+.hero-stats {
+  display: flex; gap: 40px; flex-wrap: wrap;
+  border-top: 1px solid var(--border); padding-top: 40px; margin-top: 80px;
+}
+.stat-val {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 36px; font-weight: 600; color: var(--accent); line-height: 1;
+}
+.stat-label {
+  font-size: 12px; color: var(--muted);
+  margin-top: 6px; letter-spacing: 0.06em; text-transform: uppercase;
+}
+
+/* ── ABOUT ────────────────────────────────────────────────────────────── */
+.about-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
+}
+.about-art {
+  width: 100%; aspect-ratio: 4/5; border-radius: 8px;
+  background: linear-gradient(135deg, var(--highlight) 0%, var(--bg) 100%);
+  border: 1px solid var(--border); position: relative;
+  display: flex; align-items: center; justify-content: center; overflow: hidden;
+}
+.about-badge {
+  position: absolute; bottom: -20px; right: -20px;
+  background: var(--bg); border: 1px solid var(--border);
+  border-radius: 8px; padding: 12px 20px;
+}
+.about-badge-label { font-size: 11px; color: var(--muted); letter-spacing: 0.06em; text-transform: uppercase; }
+.about-badge-val { font-size: 14px; color: var(--accent); font-weight: 500; margin-top: 2px; }
+.about-left { position: relative; }
+.about-p { color: var(--muted); line-height: 1.85; font-size: 16px; margin-bottom: 20px; }
+.about-p strong { color: var(--cream); font-weight: 600; }
+.about-p .accent { color: var(--accent); }
+
+/* ── EXPERIENCE ───────────────────────────────────────────────────────── */
+.exp-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 12px; padding: 40px; position: relative; overflow: hidden;
+  margin-bottom: 24px; transition: border-color 0.3s, transform 0.3s;
+}
+.exp-card:hover { transform: translateY(-4px); }
+.exp-bar {
+  position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
+  border-radius: 12px 0 0 12px;
+}
+.exp-header { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 12px; margin-bottom: 8px; }
+.exp-company {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 28px; font-weight: 600; color: var(--cream); margin-bottom: 4px;
+}
+.exp-role { font-size: 13px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; }
+.exp-quote { color: var(--muted); font-size: 14px; line-height: 1.7; font-style: italic; margin: 16px 0 24px; }
+.skill-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip {
+  padding: 5px 12px; border-radius: 20px; font-size: 12px;
+  background: rgba(255,255,255,0.04); color: var(--muted);
+  border: 1px solid var(--border);
+}
+
+/* ── SKILLS ───────────────────────────────────────────────────────────── */
+.skills-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
+.skill-card {
+  background: var(--bg); border: 1px solid var(--border);
+  border-radius: 10px; padding: 28px; transition: border-color 0.3s;
+}
+.skill-card:hover { border-color: var(--accent-muted); }
+.skill-card-header { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
+.skill-icon { font-size: 20px; color: var(--accent); }
+.skill-card h3 { font-size: 15px; font-weight: 600; color: var(--cream); letter-spacing: 0.04em; }
+.skill-tag {
+  padding: 4px 10px; border-radius: 4px; font-size: 12px;
+  background: rgba(201,169,110,0.06); color: var(--muted);
+  border: 1px solid rgba(201,169,110,0.12);
+}
+
+/* ── PROJECTS ─────────────────────────────────────────────────────────── */
+.projects-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
+.project-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 12px; padding: 32px;
+  display: flex; flex-direction: column; gap: 16px;
+  transition: transform 0.3s, border-color 0.3s;
+}
+.project-card:hover { transform: translateY(-6px); border-color: var(--accent-muted); }
+.proj-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 48px; font-weight: 600; color: var(--highlight); line-height: 1;
+}
+.proj-header { display: flex; justify-content: space-between; align-items: flex-start; }
+.proj-status-in  { font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 4px 10px; border-radius: 4px; background: rgba(29,158,117,0.15); color: #1D9E75; border: 1px solid rgba(29,158,117,0.3); }
+.proj-status-pl  { font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 4px 10px; border-radius: 4px; background: rgba(107,116,148,0.15); color: var(--muted); border: 1px solid var(--border); }
+.proj-title { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 600; color: var(--cream); }
+.proj-desc { font-size: 14px; color: var(--muted); line-height: 1.75; flex: 1; }
+.proj-tech-wrap { display: flex; flex-wrap: wrap; gap: 6px; }
+.proj-tech {
+  padding: 3px 9px; border-radius: 4px; font-size: 11px;
+  background: rgba(201,169,110,0.08); color: var(--accent);
+  border: 1px solid rgba(201,169,110,0.2); font-weight: 500;
+}
+.proj-links {
+  display: flex; gap: 16px; padding-top: 12px;
+  border-top: 1px solid var(--border);
+}
+.proj-links a {
+  font-size: 13px; color: var(--muted); text-decoration: none;
+  display: flex; align-items: center; gap: 6px; transition: color 0.2s;
+}
+.proj-links a:hover { color: var(--cream); }
+
+/* ── IMPACT ───────────────────────────────────────────────────────────── */
+.impact-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
+.impact-card {
+  background: var(--bg); border: 1px solid var(--border);
+  border-radius: 12px; padding: 32px; transition: border-color 0.3s, transform 0.3s;
+}
+.impact-card:hover { border-color: var(--accent); transform: translateY(-4px); }
+.impact-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+.impact-icon { font-size: 24px; color: var(--accent); }
+.impact-metric { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); }
+.impact-title { font-family: 'Cormorant Garamond', serif; font-size: 18px; font-weight: 600; color: var(--cream); margin-bottom: 12px; }
+.impact-desc { font-size: 14px; color: var(--muted); line-height: 1.75; }
+
+/* ── CONTACT ──────────────────────────────────────────────────────────── */
+.contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
+.contact-links { display: flex; flex-direction: column; gap: 16px; padding-top: 8px; }
+.contact-link {
+  display: flex; align-items: center; gap: 16px; padding: 20px 24px;
+  border-radius: 10px; text-decoration: none;
+  background: var(--surface); border: 1px solid var(--border);
+  transition: border-color 0.3s, transform 0.3s; color: var(--cream);
+}
+.contact-link:hover { border-color: var(--accent); transform: translateX(6px); }
+.contact-icon-box {
+  width: 44px; height: 44px; border-radius: 8px; flex-shrink: 0;
+  background: rgba(201,169,110,0.1); display: flex; align-items: center; justify-content: center;
+  color: var(--accent);
+}
+.contact-label { font-size: 11px; color: var(--muted); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 2px; }
+.contact-val { font-size: 14px; color: var(--cream); font-weight: 500; }
+.contact-arrow { margin-left: auto; color: var(--muted); font-size: 18px; }
+.btn-download {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 14px 28px; border-radius: 6px;
+  background: var(--accent); color: #0D0F14;
+  text-decoration: none; font-weight: 700; font-size: 13px;
+  letter-spacing: 0.06em; text-transform: uppercase;
+  transition: opacity 0.2s;
+}
+.btn-download:hover { opacity: 0.85; }
+
+/* ── FOOTER ───────────────────────────────────────────────────────────── */
+footer {
+  background: var(--surface); border-top: 1px solid var(--border);
+  padding: 32px 24px;
+}
+.footer-inner {
+  max-width: 1100px; margin: 0 auto;
+  display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;
+}
+.footer-logo { font-family: 'Cormorant Garamond', serif; font-size: 18px; color: var(--cream); }
+.footer-logo span { color: var(--accent); }
+.footer-muted { font-size: 13px; color: var(--muted); }
+.footer-copy  { font-size: 12px; color: var(--muted); }
+
+/* ── RESPONSIVE ───────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .nav-links { display: none; }
+  .menu-btn  { display: block; }
+  .about-grid  { grid-template-columns: 1fr; gap: 40px; }
+  .contact-grid { grid-template-columns: 1fr; gap: 40px; }
+  .hero-glow { display: none; }
+  .about-badge { right: 0; }
+}
+@media (max-width: 480px) {
+  .hero-stats { gap: 24px; }
+  .btn-ctas   { flex-direction: column; }
+}
+</style>
+</head>
+<body>
+
+<!-- ── NAV ───────────────────────────────────────────────────────────────── -->
+<nav id="navbar">
+  <div class="nav-inner">
+    <!-- CONTENT: initials / name in nav -->
+    <a href="#hero" class="nav-logo">MR<span>.</span></a>
+    <div class="nav-links">
+      <a href="#about">About</a>
+      <a href="#experience">Experience</a>
+      <a href="#skills">Skills</a>
+      <a href="#projects">Projects</a>
+      <a href="#impact">Impact</a>
+      <a href="#contact" class="nav-cta">Hire Me</a>
+    </div>
+    <button class="menu-btn" onclick="toggleMenu()" aria-label="Toggle menu">☰</button>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#about"      onclick="toggleMenu()">About</a>
+    <a href="#experience" onclick="toggleMenu()">Experience</a>
+    <a href="#skills"     onclick="toggleMenu()">Skills</a>
+    <a href="#projects"   onclick="toggleMenu()">Projects</a>
+    <a href="#impact"     onclick="toggleMenu()">Impact</a>
+    <a href="#contact"    onclick="toggleMenu()">Contact</a>
+  </div>
+</nav>
+
+<!-- ── HERO ──────────────────────────────────────────────────────────────── -->
+<section id="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-glow"></div>
+  <div class="container hero-content">
+
+    <!-- CONTENT: hero label -->
+    <div class="tag fade">Quality Engineer · AI/ML Learner</div>
+
+    <!-- CONTENT: main headline -->
+    <h1 class="hero-h1 fade">
+      Designing quality-driven digital experiences,
+      <em>now evolving</em> into AI/ML.
+    </h1>
+
+    <!-- CONTENT: subheadline -->
+    <p class="hero-sub fade">
+      I bring hands-on experience from telecom systems at Plintron and enterprise product quality
+      at Appian — combining testing strategy, automation, accessibility, performance engineering,
+      and AI/ML learning.
+    </p>
+
+    <div class="btn-ctas fade">
+      <!-- CONTENT: CTA buttons -->
+      <a href="#experience" class="btn-primary">View Experience</a>
+      <a href="#projects" class="btn-outline">View AI/ML Projects</a>
+    </div>
+
+    <!-- CONTENT: hero stats — update as needed -->
+    <div class="hero-stats fade">
+      <div><div class="stat-val">2+</div><div class="stat-label">Years at Appian</div></div>
+      <div><div class="stat-val">Telecom</div><div class="stat-label">Domain at Plintron</div></div>
+      <div><div class="stat-val">AI/ML</div><div class="stat-label">Current Focus</div></div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ── ABOUT ─────────────────────────────────────────────────────────────── -->
+<section id="about" class="section-alt">
+  <div class="container">
+    <div class="about-grid">
+
+      <!-- Abstract visual -->
+      <div class="about-left fade">
+        <div class="about-art">
+          <svg viewBox="0 0 320 400" style="width:80%;opacity:0.6">
+            <circle cx="160" cy="120" r="70" fill="none" stroke="#C9A96E" stroke-width="1"/>
+            <circle cx="160" cy="120" r="45" fill="none" stroke="#C9A96E" stroke-width="0.5"/>
+            <line x1="90" y1="120" x2="230" y2="120" stroke="#C9A96E" stroke-width="0.5"/>
+            <line x1="160" y1="50" x2="160" y2="190" stroke="#C9A96E" stroke-width="0.5"/>
+            <rect x="100" y="220" width="120" height="2" fill="#8A6F45"/>
+            <rect x="120" y="240" width="80" height="1" fill="#8A6F45" opacity="0.5"/>
+            <text x="160" y="290" text-anchor="middle" fill="#C9A96E" font-size="11" font-family="DM Sans" letter-spacing="4">MUKUNDAN RAMESH</text>
+            <text x="160" y="310" text-anchor="middle" fill="#6B7494" font-size="9" font-family="DM Sans" letter-spacing="3">QUALITY · AI/ML</text>
+          </svg>
+          <div class="about-badge">
+            <div class="about-badge-label">Currently</div>
+            <div class="about-badge-val">Transitioning → AI/ML</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Text -->
+      <div>
+        <div class="tag fade">About Me</div>
+        <h2 class="section-title fade" style="margin-bottom:24px">From Telecom QA<br>to AI/ML Engineering</h2>
+
+        <!-- CONTENT: update bio -->
+        <p class="about-p fade">
+          I started my professional journey in the telecom domain at <strong>Plintron</strong>, where
+          I built a strong foundation in testing, debugging, and understanding real-world platform behavior.
+        </p>
+        <p class="about-p fade">
+          Later at <strong>Appian</strong>, I worked on enterprise-grade product quality, automation,
+          accessibility, performance testing, and release readiness — owning end-to-end quality for
+          complex, distributed enterprise software.
+        </p>
+        <p class="about-p fade">
+          I am now transitioning into <span class="accent"><strong>AI/ML</strong></span> with a focus on building
+          practical, data-driven projects that bridge quality engineering principles with intelligent automation.
+        </p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── EXPERIENCE ─────────────────────────────────────────────────────────── -->
+<section id="experience" class="section">
+  <div class="container">
+    <div class="tag fade">Experience</div>
+    <h2 class="section-title fade">Where I've Built My Craft</h2>
+
+    <!-- CONTENT: Appian -->
+    <div class="exp-card fade" style="border-color:var(--border)" onmouseenter="this.style.borderColor='#1A7FE6'" onmouseleave="this.style.borderColor='var(--border)'">
+      <div class="exp-bar" style="background:#1A7FE6"></div>
+      <div class="exp-header">
+        <div>
+          <div class="exp-company">Appian</div>
+          <div class="exp-role" style="color:#1A7FE6">Quality Engineer 2</div>
+        </div>
+        <div class="tag" style="margin-bottom:0">Enterprise Product Quality</div>
+      </div>
+      <!-- CONTENT: update quote -->
+      <p class="exp-quote">"Led quality ownership for enterprise-grade features across multiple release cycles."</p>
+      <div class="skill-chips">
+        <!-- CONTENT: update focus areas -->
+        <span class="chip">Enterprise product quality</span>
+        <span class="chip">Python · Selenium · Pytest</span>
+        <span class="chip">Accessibility testing</span>
+        <span class="chip">Performance testing (Locust)</span>
+        <span class="chip">Release quality ownership</span>
+        <span class="chip">Jira dashboards &amp; metrics</span>
+        <span class="chip">CI/CD quality reporting</span>
+        <span class="chip">AI-assisted testing workflows</span>
+      </div>
+    </div>
+
+    <!-- CONTENT: Plintron -->
+    <div class="exp-card fade" onmouseenter="this.style.borderColor='var(--accent)'" onmouseleave="this.style.borderColor='var(--border)'">
+      <div class="exp-bar" style="background:var(--accent)"></div>
+      <div class="exp-header">
+        <div>
+          <div class="exp-company">Plintron</div>
+          <div class="exp-role" style="color:var(--accent)">QA Engineer</div>
+        </div>
+        <div class="tag" style="margin-bottom:0">Telecom Domain</div>
+      </div>
+      <p class="exp-quote">"Built deep domain expertise in MVNO telecom platform testing and system behavior."</p>
+      <div class="skill-chips">
+        <span class="chip">Telecom domain testing</span>
+        <span class="chip">Functional testing</span>
+        <span class="chip">Defect analysis</span>
+        <span class="chip">System understanding</span>
+        <span class="chip">Regression validation</span>
+        <span class="chip">Cross-team collaboration</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ── SKILLS ─────────────────────────────────────────────────────────────── -->
+<section id="skills" class="section-alt">
+  <div class="container">
+    <div class="tag fade">Skills</div>
+    <h2 class="section-title fade">Technical Toolkit</h2>
+    <div class="skills-grid">
+
+      <!-- CONTENT: update skill groups -->
+      <div class="skill-card fade">
+        <div class="skill-card-header"><span class="skill-icon">✦</span><h3>Quality Engineering</h3></div>
+        <div class="skill-chips" style="gap:7px">
+          <span class="skill-tag">Test Strategy</span><span class="skill-tag">Functional Testing</span>
+          <span class="skill-tag">Regression Testing</span><span class="skill-tag">Defect Analysis</span>
+          <span class="skill-tag">Release Readiness</span><span class="skill-tag">Test Planning</span>
+        </div>
+      </div>
+
+      <div class="skill-card fade">
+        <div class="skill-card-header"><span class="skill-icon">⟳</span><h3>Automation</h3></div>
+        <div class="skill-chips" style="gap:7px">
+          <span class="skill-tag">Python</span><span class="skill-tag">Selenium</span>
+          <span class="skill-tag">Pytest</span><span class="skill-tag">CI/CD Integration</span>
+          <span class="skill-tag">Framework Design</span><span class="skill-tag">AI-assisted Testing</span>
+        </div>
+      </div>
+
+      <div class="skill-card fade">
+        <div class="skill-card-header"><span class="skill-icon">◈</span><h3>Performance Testing</h3></div>
+        <div class="skill-chips" style="gap:7px">
+          <span class="skill-tag">Locust</span><span class="skill-tag">Load Testing</span>
+          <span class="skill-tag">Scalability Analysis</span><span class="skill-tag">Performance Reporting</span>
+          <span class="skill-tag">Bottleneck Identification</span>
+        </div>
+      </div>
+
+      <div class="skill-card fade">
+        <div class="skill-card-header"><span class="skill-icon">◎</span><h3>Accessibility</h3></div>
+        <div class="skill-chips" style="gap:7px">
+          <span class="skill-tag">WCAG Compliance</span><span class="skill-tag">Screen Reader Testing</span>
+          <span class="skill-tag">Keyboard Navigation</span><span class="skill-tag">Color Contrast</span>
+          <span class="skill-tag">Shift-Left Accessibility</span>
+        </div>
+      </div>
+
+      <div class="skill-card fade">
+        <div class="skill-card-header"><span class="skill-icon">◆</span><h3>AI/ML Learning</h3></div>
+        <div class="skill-chips" style="gap:7px">
+          <span class="skill-tag">Python (ML)</span><span class="skill-tag">Scikit-learn</span>
+          <span class="skill-tag">Pandas</span><span class="skill-tag">NumPy</span>
+          <span class="skill-tag">Data Analysis</span><span class="skill-tag">NLP Basics</span><span class="skill-tag">Computer Vision</span>
+        </div>
+      </div>
+
+      <div class="skill-card fade">
+        <div class="skill-card-header"><span class="skill-icon">⊞</span><h3>Tools &amp; Platforms</h3></div>
+        <div class="skill-chips" style="gap:7px">
+          <span class="skill-tag">Jira</span><span class="skill-tag">Confluence</span>
+          <span class="skill-tag">Git</span><span class="skill-tag">GitHub</span>
+          <span class="skill-tag">Appian Platform</span><span class="skill-tag">Telecom Systems</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── AI/ML PROJECTS ─────────────────────────────────────────────────────── -->
+<section id="projects" class="section">
+  <div class="container">
+    <div class="tag fade">AI/ML Projects</div>
+    <h2 class="section-title fade" style="margin-bottom:12px">Building in Public</h2>
+    <p class="fade" style="color:var(--muted);font-size:16px;margin-bottom:56px;max-width:500px">
+      Projects in progress as I transition into AI/ML. Check back for updates.
+    </p>
+    <div class="projects-grid">
+
+      <!-- CONTENT: update project cards with real data -->
+      <div class="project-card fade">
+        <div class="proj-header">
+          <div class="proj-num">01</div>
+          <span class="proj-status-in">In Progress</span>
+        </div>
+        <div class="proj-title">Machine Learning Project</div>
+        <div class="proj-desc">A supervised learning project exploring classification or regression techniques on real-world datasets. Details coming soon.</div>
+        <div class="proj-tech-wrap">
+          <span class="proj-tech">Python</span><span class="proj-tech">Scikit-learn</span>
+          <span class="proj-tech">Pandas</span><span class="proj-tech">Matplotlib</span>
+        </div>
+        <div class="proj-links">
+          <a href="#"><!-- CONTENT: replace with GitHub URL -->
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.2 11.38.6.1.82-.26.82-.58v-2.03c-3.34.72-4.04-1.61-4.04-1.61-.55-1.4-1.34-1.77-1.34-1.77-1.08-.74.08-.72.08-.72 1.2.08 1.83 1.23 1.83 1.23 1.07 1.83 2.8 1.3 3.49 1 .1-.78.42-1.3.76-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.3.47-2.38 1.24-3.22-.14-.3-.54-1.52.1-3.18 0 0 1-.32 3.3 1.23a11.5 11.5 0 013-.4c1.02.005 2.04.14 3 .4 2.28-1.55 3.29-1.23 3.29-1.23.65 1.66.24 2.88.12 3.18.77.84 1.23 1.92 1.23 3.22 0 4.61-2.8 5.63-5.48 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.22.7.83.58C20.57 21.8 24 17.3 24 12c0-6.63-5.37-12-12-12z"/></svg>
+            GitHub
+          </a>
+          <a href="#">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/></svg>
+            Live Demo
+          </a>
+        </div>
+      </div>
+
+      <div class="project-card fade">
+        <div class="proj-header"><div class="proj-num">02</div><span class="proj-status-pl">Planned</span></div>
+        <div class="proj-title">Data Analysis Project</div>
+        <div class="proj-desc">End-to-end data analysis pipeline covering EDA, visualization, and actionable insights. Details coming soon.</div>
+        <div class="proj-tech-wrap">
+          <span class="proj-tech">Python</span><span class="proj-tech">Pandas</span>
+          <span class="proj-tech">Seaborn</span><span class="proj-tech">Jupyter</span>
+        </div>
+        <div class="proj-links">
+          <a href="#"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.2 11.38.6.1.82-.26.82-.58v-2.03c-3.34.72-4.04-1.61-4.04-1.61-.55-1.4-1.34-1.77-1.34-1.77-1.08-.74.08-.72.08-.72 1.2.08 1.83 1.23 1.83 1.23 1.07 1.83 2.8 1.3 3.49 1 .1-.78.42-1.3.76-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.3.47-2.38 1.24-3.22-.14-.3-.54-1.52.1-3.18 0 0 1-.32 3.3 1.23a11.5 11.5 0 013-.4c1.02.005 2.04.14 3 .4 2.28-1.55 3.29-1.23 3.29-1.23.65 1.66.24 2.88.12 3.18.77.84 1.23 1.92 1.23 3.22 0 4.61-2.8 5.63-5.48 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.22.7.83.58C20.57 21.8 24 17.3 24 12c0-6.63-5.37-12-12-12z"/></svg> GitHub</a>
+          <a href="#"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/></svg> Live Demo</a>
+        </div>
+      </div>
+
+      <div class="project-card fade">
+        <div class="proj-header"><div class="proj-num">03</div><span class="proj-status-pl">Planned</span></div>
+        <div class="proj-title">NLP Project</div>
+        <div class="proj-desc">Natural language processing application — sentiment analysis, text classification, or topic modeling. Details coming soon.</div>
+        <div class="proj-tech-wrap">
+          <span class="proj-tech">Python</span><span class="proj-tech">NLTK</span>
+          <span class="proj-tech">spaCy</span><span class="proj-tech">Transformers</span>
+        </div>
+        <div class="proj-links">
+          <a href="#"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.2 11.38.6.1.82-.26.82-.58v-2.03c-3.34.72-4.04-1.61-4.04-1.61-.55-1.4-1.34-1.77-1.34-1.77-1.08-.74.08-.72.08-.72 1.2.08 1.83 1.23 1.83 1.23 1.07 1.83 2.8 1.3 3.49 1 .1-.78.42-1.3.76-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.3.47-2.38 1.24-3.22-.14-.3-.54-1.52.1-3.18 0 0 1-.32 3.3 1.23a11.5 11.5 0 013-.4c1.02.005 2.04.14 3 .4 2.28-1.55 3.29-1.23 3.29-1.23.65 1.66.24 2.88.12 3.18.77.84 1.23 1.92 1.23 3.22 0 4.61-2.8 5.63-5.48 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.22.7.83.58C20.57 21.8 24 17.3 24 12c0-6.63-5.37-12-12-12z"/></svg> GitHub</a>
+          <a href="#"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/></svg> Live Demo</a>
+        </div>
+      </div>
+
+      <div class="project-card fade">
+        <div class="proj-header"><div class="proj-num">04</div><span class="proj-status-pl">Planned</span></div>
+        <div class="proj-title">Computer Vision Project</div>
+        <div class="proj-desc">Image recognition or object detection project using modern CV techniques. Details coming soon.</div>
+        <div class="proj-tech-wrap">
+          <span class="proj-tech">Python</span><span class="proj-tech">OpenCV</span>
+          <span class="proj-tech">PyTorch</span><span class="proj-tech">Pillow</span>
+        </div>
+        <div class="proj-links">
+          <a href="#"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.2 11.38.6.1.82-.26.82-.58v-2.03c-3.34.72-4.04-1.61-4.04-1.61-.55-1.4-1.34-1.77-1.34-1.77-1.08-.74.08-.72.08-.72 1.2.08 1.83 1.23 1.83 1.23 1.07 1.83 2.8 1.3 3.49 1 .1-.78.42-1.3.76-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.3.47-2.38 1.24-3.22-.14-.3-.54-1.52.1-3.18 0 0 1-.32 3.3 1.23a11.5 11.5 0 013-.4c1.02.005 2.04.14 3 .4 2.28-1.55 3.29-1.23 3.29-1.23.65 1.66.24 2.88.12 3.18.77.84 1.23 1.92 1.23 3.22 0 4.61-2.8 5.63-5.48 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.22.7.83.58C20.57 21.8 24 17.3 24 12c0-6.63-5.37-12-12-12z"/></svg> GitHub</a>
+          <a href="#"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/></svg> Live Demo</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── QUALITY IMPACT ─────────────────────────────────────────────────────── -->
+<section id="impact" class="section-alt">
+  <div class="container">
+    <div class="tag fade">Selected Quality Impact</div>
+    <h2 class="section-title fade">Work That Moved the Needle</h2>
+    <div class="impact-grid">
+
+      <!-- CONTENT: update impact cards with real metrics -->
+      <div class="impact-card fade">
+        <div class="impact-top"><span class="impact-icon">⟲</span><span class="impact-metric">Efficiency↑</span></div>
+        <div class="impact-title">Reduced Regression Effort</div>
+        <div class="impact-desc">Streamlined regression test cycles through smart test selection and automation, reducing manual effort and shortening release timelines.</div>
+      </div>
+
+      <div class="impact-card fade">
+        <div class="impact-top"><span class="impact-icon">◈</span><span class="impact-metric">Coverage↑</span></div>
+        <div class="impact-title">Automation Coverage</div>
+        <div class="impact-desc">Expanded automation coverage using Python, Selenium, and Pytest — converting manual test cases into reliable, maintainable automated suites.</div>
+      </div>
+
+      <div class="impact-card fade">
+        <div class="impact-top"><span class="impact-icon">◎</span><span class="impact-metric">WCAG Compliant</span></div>
+        <div class="impact-title">Accessibility Shift-Left</div>
+        <div class="impact-desc">Introduced accessibility testing early in the development cycle, ensuring WCAG compliance and inclusive product experiences before release.</div>
+      </div>
+
+      <div class="impact-card fade">
+        <div class="impact-top"><span class="impact-icon">◆</span><span class="impact-metric">Load Insights</span></div>
+        <div class="impact-title">Performance Testing</div>
+        <div class="impact-desc">Designed and executed performance test scenarios using Locust, delivering actionable reports on system behavior under load.</div>
+      </div>
+
+      <div class="impact-card fade">
+        <div class="impact-top"><span class="impact-icon">⊞</span><span class="impact-metric">Visibility↑</span></div>
+        <div class="impact-title">Quality Dashboards</div>
+        <div class="impact-desc">Built Jira dashboards and quality metrics reports that gave stakeholders real-time visibility into defect trends and release readiness.</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── CONTACT ────────────────────────────────────────────────────────────── -->
+<section id="contact" class="section" style="border-top:1px solid var(--border)">
+  <div class="container">
+    <div class="contact-grid">
+
+      <div>
+        <div class="tag fade">Contact</div>
+        <h2 class="section-title fade" style="margin-bottom:20px">Let's Build Something Together</h2>
+        <p class="fade" style="color:var(--muted);font-size:16px;line-height:1.8;margin-bottom:40px;max-width:420px">
+          Open to quality engineering roles, AI/ML collaborations, and interesting conversations.
+          Reach out through any of the channels below.
+        </p>
+        <!-- CONTENT: replace # with real resume PDF link -->
+        <a href="#" download class="btn-download fade">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+          Download Resume
+        </a>
+      </div>
+
+      <div class="contact-links">
+        <!-- CONTENT: replace href and values with real links -->
+        <a href="mailto:mukundan@example.com" class="contact-link fade">
+          <div class="contact-icon-box">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 7l10 7 10-7"/></svg>
+          </div>
+          <div><div class="contact-label">Email</div><div class="contact-val">mukundan@example.com</div></div>
+          <div class="contact-arrow">→</div>
+        </a>
+
+        <a href="https://linkedin.com/in/mukundan" class="contact-link fade" target="_blank" rel="noopener">
+          <div class="contact-icon-box">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2zM4 6a2 2 0 100-4 2 2 0 000 4z"/></svg>
+          </div>
+          <div><div class="contact-label">LinkedIn</div><div class="contact-val">linkedin.com/in/mukundan</div></div>
+          <div class="contact-arrow">→</div>
+        </a>
+
+        <a href="https://github.com/mukundan" class="contact-link fade" target="_blank" rel="noopener">
+          <div class="contact-icon-box">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.2 11.38.6.1.82-.26.82-.58v-2.03c-3.34.72-4.04-1.61-4.04-1.61-.55-1.4-1.34-1.77-1.34-1.77-1.08-.74.08-.72.08-.72 1.2.08 1.83 1.23 1.83 1.23 1.07 1.83 2.8 1.3 3.49 1 .1-.78.42-1.3.76-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.3.47-2.38 1.24-3.22-.14-.3-.54-1.52.1-3.18 0 0 1-.32 3.3 1.23a11.5 11.5 0 013-.4c1.02.005 2.04.14 3 .4 2.28-1.55 3.29-1.23 3.29-1.23.65 1.66.24 2.88.12 3.18.77.84 1.23 1.92 1.23 3.22 0 4.61-2.8 5.63-5.48 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.22.7.83.58C20.57 21.8 24 17.3 24 12c0-6.63-5.37-12-12-12z"/></svg>
+          </div>
+          <div><div class="contact-label">GitHub</div><div class="contact-val">github.com/mukundan</div></div>
+          <div class="contact-arrow">→</div>
+        </a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ─────────────────────────────────────────────────────────────── -->
+<footer>
+  <div class="footer-inner">
+    <!-- CONTENT: update footer details -->
+    <div class="footer-logo">Mukundan Ramesh<span>.</span></div>
+    <div class="footer-muted">Quality Engineer · AI/ML Learner · Chennai, India</div>
+    <div class="footer-copy" id="year"></div>
+  </div>
+</footer>
+
+<script>
+// ── SCROLL: nav bg ──────────────────────────────────────────────────────────
+window.addEventListener('scroll', () => {
+  document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 40);
+});
+
+// ── MOBILE MENU ─────────────────────────────────────────────────────────────
+function toggleMenu() {
+  document.getElementById('mobileMenu').classList.toggle('open');
+}
+
+// ── FADE-IN ON SCROLL ───────────────────────────────────────────────────────
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) {
+      setTimeout(() => e.target.classList.add('visible'), i * 60);
+      observer.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.12 });
+document.querySelectorAll('.fade').forEach(el => observer.observe(el));
+
+// ── FOOTER YEAR ─────────────────────────────────────────────────────────────
+document.getElementById('year').textContent = '© ' + new Date().getFullYear();
+</script>
+</body>
+</html>
