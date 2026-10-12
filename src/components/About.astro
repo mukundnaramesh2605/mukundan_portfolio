@@ -1,0 +1,34 @@
+---
+import { about, site } from '../data/content';
+---
+
+<section id="about" class="section-alt">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-left fade">
+        <div class="about-art">
+          <svg viewBox="0 0 320 400" style="width:80%;opacity:0.6" role="img" aria-label={`${site.name} — Quality and AI/ML`}>
+            <circle cx="160" cy="120" r="70" fill="none" stroke="var(--accent)" stroke-width="1"/>
+            <circle cx="160" cy="120" r="45" fill="none" stroke="var(--accent)" stroke-width="0.5"/>
+            <line x1="90" y1="120" x2="230" y2="120" stroke="var(--accent)" stroke-width="0.5"/>
+            <line x1="160" y1="50" x2="160" y2="190" stroke="var(--accent)" stroke-width="0.5"/>
+            <rect x="100" y="220" width="120" height="2" fill="var(--accent-muted)"/>
+            <rect x="120" y="240" width="80" height="1" fill="var(--accent-muted)" opacity="0.5"/>
+            <text x="160" y="290" text-anchor="middle" fill="var(--accent)" font-size="11" font-family="DM Sans" letter-spacing="4">MUKUNDAN RAMESH</text>
+            <text x="160" y="310" text-anchor="middle" fill="var(--text-dim)" font-size="9" font-family="DM Sans" letter-spacing="3">QUALITY · AI/ML</text>
+          </svg>
+          <div class="about-badge">
+            <div class="about-badge-label">Currently</div>
+            <div class="about-badge-val">Transitioning → AI/ML</div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <p class="tag fade">About Me</p>
+        <h2 class="section-title fade" style="margin-bottom:24px">From Telecom QA<br />to AI/ML Engineering</h2>
+        {about.paragraphs.map((p) => <p class="about-p fade" set:html={p} />)}
+      </div>
+    </div>
+  </div>
+</section>

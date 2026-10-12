@@ -1,0 +1,29 @@
+---
+import { experience } from '../data/content';
+---
+
+<section id="experience" class="section">
+  <div class="container">
+    <p class="tag fade">Experience</p>
+    <h2 class="section-title fade">Where I've Built My Craft</h2>
+
+    {
+      experience.map((job) => (
+        <article class="exp-card fade">
+          <span class="exp-bar" style={`background:${job.accent}`} aria-hidden="true" />
+          <div class="exp-header">
+            <div>
+              <h3 class="exp-company">{job.company}</h3>
+              <p class="exp-role" style={`color:${job.accent}`}>{job.role}</p>
+            </div>
+            <span class="tag" style="margin-bottom:0">{job.tag}</span>
+          </div>
+          <p class="exp-quote">&ldquo;{job.quote}&rdquo;</p>
+          <div class="skill-chips">
+            {job.chips.map((c) => <span class="chip">{c}</span>)}
+          </div>
+        </article>
+      ))
+    }
+  </div>
+</section>

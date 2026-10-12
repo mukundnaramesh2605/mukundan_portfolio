@@ -1,0 +1,38 @@
+---
+import { hero } from '../data/content';
+---
+
+<section id="hero" class="hero">
+  <div class="hero-grid" aria-hidden="true"></div>
+  <div class="hero-glow" aria-hidden="true"></div>
+  <div class="container hero-content">
+    <p class="tag fade">{hero.tag}</p>
+
+    <h1 class="hero-h1 fade">
+      {hero.headline[0]} <em>{hero.headline[1]}</em> {hero.headline[2]}
+    </h1>
+
+    <p class="hero-sub fade">{hero.sub}</p>
+
+    <div class="btn-ctas fade">
+      <a href="#experience" class="btn-primary">View Experience</a>
+      <a href="#projects" class="btn-outline">View AI/ML Projects</a>
+    </div>
+
+    <dl class="hero-stats fade">
+      {
+        hero.stats.map((s) => (
+          <div>
+            <dt class="stat-val">{s.val}</dt>
+            <dd class="stat-label">{s.label}</dd>
+          </div>
+        ))
+      }
+    </dl>
+  </div>
+</section>
+
+<style>
+  .hero-stats dt { margin: 0; }
+  .hero-stats dd { margin: 0; }
+</style>
