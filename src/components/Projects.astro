@@ -1,0 +1,49 @@
+---
+import { projects } from '../data/content';
+---
+
+<section id="projects" class="section">
+  <div class="container">
+    <p class="tag fade">AI/ML Projects</p>
+    <h2 class="section-title fade" style="margin-bottom:12px">Building in Public</h2>
+    <p class="fade" style="color:var(--text-dim);font-size:16px;margin-bottom:56px;max-width:500px">
+      Projects in progress as I transition into AI/ML. Check back for updates.
+    </p>
+
+    <div class="projects-grid">
+      {
+        projects.map((p) => (
+          <article class="project-card fade">
+            <div class="proj-header">
+              <div class="proj-num">{p.num}</div>
+              <span class={p.status === 'in-progress' ? 'proj-status-in' : 'proj-status-pl'}>
+                {p.status === 'in-progress' ? 'In Progress' : 'Planned'}
+              </span>
+            </div>
+            <h3 class="proj-title">{p.title}</h3>
+            <p class="proj-desc">{p.desc}</p>
+            <div class="proj-tech-wrap">
+              {p.tech.map((t) => <span class="proj-tech">{t}</span>)}
+            </div>
+            {(p.github || p.demo) && (
+              <div class="proj-links">
+                {p.github && (
+                  <a href={p.github} target="_blank" rel="noopener">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.2 11.38.6.1.82-.26.82-.58v-2.03c-3.34.72-4.04-1.61-4.04-1.61-.55-1.4-1.34-1.77-1.34-1.77-1.08-.74.08-.72.08-.72 1.2.08 1.83 1.23 1.83 1.23 1.07 1.83 2.8 1.3 3.49 1 .1-.78.42-1.3.76-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.3.47-2.38 1.24-3.22-.14-.3-.54-1.52.1-3.18 0 0 1-.32 3.3 1.23a11.5 11.5 0 013-.4c1.02.005 2.04.14 3 .4 2.28-1.55 3.29-1.23 3.29-1.23.65 1.66.24 2.88.12 3.18.77.84 1.23 1.92 1.23 3.22 0 4.61-2.8 5.63-5.48 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.22.7.83.58C20.57 21.8 24 17.3 24 12c0-6.63-5.37-12-12-12z"/></svg>
+                    GitHub
+                  </a>
+                )}
+                {p.demo && (
+                  <a href={p.demo} target="_blank" rel="noopener">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/></svg>
+                    Live Demo
+                  </a>
+                )}
+              </div>
+            )}
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>

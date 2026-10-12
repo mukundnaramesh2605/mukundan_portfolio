@@ -1,0 +1,83 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Nav from '../components/Nav.astro';
+import Hero from '../components/Hero.astro';
+import About from '../components/About.astro';
+import Experience from '../components/Experience.astro';
+import Skills from '../components/Skills.astro';
+import Projects from '../components/Projects.astro';
+import Impact from '../components/Impact.astro';
+import Contact from '../components/Contact.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Layout>
+  <Nav />
+  <main id="main">
+    <Hero />
+    <About />
+    <Experience />
+    <Skills />
+    <Projects />
+    <Impact />
+    <Contact />
+  </main>
+  <Footer />
+</Layout>
+
+<script>
+  // ── Nav background on scroll ────────────────────────────────────────────
+  const navbar = document.getElementById('navbar');
+  const onScroll = () => navbar?.classList.toggle('scrolled', window.scrollY > 40);
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  // ── Mobile menu ─────────────────────────────────────────────────────────
+  const menuBtn = document.getElementById('menuBtn');
+  const mobileMenu = document.getElementById('mobileMenu');
+  const closeMenu = () => {
+    mobileMenu?.classList.remove('open');
+    menuBtn?.setAttribute('aria-expanded', 'false');
+  };
+  menuBtn?.addEventListener('click', () => {
+    const open = mobileMenu?.classList.toggle('open');
+    menuBtn.setAttribute('aria-expanded', String(!!open));
+  });
+  document.querySelectorAll('[data-close-menu]').forEach((a) => a.addEventListener('click', closeMenu));
+
+  // ── Fade-in on scroll (reduced-motion aware via CSS) ─────────────────────
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const faders = document.querySelectorAll('.fade');
+  if (prefersReduced || !('IntersectionObserver' in window)) {
+    faders.forEach((el) => el.classList.add('visible'));
+  } else {
+    const observer = new IntersectionObserver(
+      (entries, obs) => {
+        entries.forEach((e, i) => {
+          if (e.isIntersecting) {
+            setTimeout(() => e.target.classList.add('visible'), i * 60);
+            obs.unobserve(e.target);
+          }
+        });
+      },
+      { threshold: 0.12 }
+    );
+    faders.forEach((el) => observer.observe(el));
+  }
+
+  // ── Theme toggle (persists to localStorage) ──────────────────────────────
+  const applyTheme = (theme: string) => {
+    document.documentElement.setAttribute('data-theme', theme);
+    try {
+      localStorage.setItem('theme', theme);
+    } catch (e) {
+      /* storage unavailable (private mode) — toggle still works for the session */
+    }
+  };
+  const toggleTheme = () => {
+    const current = document.documentElement.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
+    applyTheme(current === 'light' ? 'dark' : 'light');
+  };
+  document.getElementById('themeToggle')?.addEventListener('click', toggleTheme);
+  document.getElementById('themeToggleMobile')?.addEventListener('click', toggleTheme);
+</script>
