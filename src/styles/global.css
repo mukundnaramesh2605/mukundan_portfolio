@@ -21,7 +21,7 @@ html { scroll-behavior: smooth; font-size: 16px; -webkit-text-size-adjust: 100%;
   --info:         #1A7FE6;
   --radius:       10px;
   --radius-lg:    14px;
-  --maxw:         1100px;
+  --maxw:         1240px;
   --shadow:       0 24px 60px -24px rgba(0,0,0,0.6);
   --ring:         0 0 0 3px rgba(201,169,110,0.4);
   color-scheme: dark;
@@ -83,7 +83,7 @@ a { color: inherit; }
 /* ═══════════════════════════════════════════════════════════════════════
    UTILITIES
    ═══════════════════════════════════════════════════════════════════════ */
-.container { max-width: var(--maxw); margin: 0 auto; padding: 0 20px; }
+.container { max-width: var(--maxw); margin: 0 auto; padding: 0 24px; }
 .section     { padding: clamp(56px, 8vw, 96px) 0; background: var(--bg); transition: background 0.4s ease; }
 .section-alt { padding: clamp(56px, 8vw, 96px) 0; background: var(--surface); transition: background 0.4s ease; }
 
@@ -216,15 +216,14 @@ a { color: inherit; }
 .hero-content { position: relative; z-index: 1; width: 100%; }
 .hero-h1 {
   font-family: 'Cormorant Garamond', Georgia, serif;
-  font-size: clamp(42px, 7vw, 88px);
-  font-weight: 600; line-height: 1.08; margin-bottom: 28px;
-  max-width: min(100%, 1000px); letter-spacing: -0.015em;
-  text-wrap: balance;
+  font-size: clamp(44px, 7.6vw, 104px);
+  font-weight: 600; line-height: 1.06; margin-bottom: 28px;
+  max-width: 100%; letter-spacing: -0.02em;
 }
 .hero-h1 em { color: var(--accent); font-style: italic; }
 .hero-sub {
-  font-size: clamp(16px, 2vw, 19px);
-  color: var(--text-dim); max-width: min(100%, 760px);
+  font-size: clamp(16px, 2vw, 20px);
+  color: var(--text-dim); max-width: min(100%, 880px);
   line-height: 1.75; margin-bottom: 48px; font-weight: 300;
   text-wrap: pretty;
 }
